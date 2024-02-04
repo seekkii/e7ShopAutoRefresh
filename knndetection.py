@@ -1,5 +1,4 @@
 import pyautogui
-import pyautogui
 import time
 import random
 import tkinter as tk
@@ -87,52 +86,15 @@ def searchTemplate(templatePath):
 
         # Draw a rectangle around the highest match
         cv2.rectangle(image_np, (x, y), (x + width, y + height), (0, 255, 0), 2)
-      
-        
+    
         # Click on the center of the box
         
         pyautogui.click(center_x, center_y)
         
-        return 1
+        
+        return (center_x,center_y)
     else:
         return None
-
-
-# Call the function
-    
-def searchMystic():
-    screenshot = pyautogui.screenshot()
-    image_np = np.array(screenshot)
-    
-    template = cv2.imread('mystic.PNG')
-
-    # Convert images to grayscale
-    main_gray = cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY)
-    template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-
-    # Apply template matching
-    result = cv2.matchTemplate(main_gray, template_gray, cv2.TM_CCOEFF_NORMED)
-
-    # Find the location of the maximum value in the result matrix
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-
-    # Get the coordinates of the top-left corner of the rectangle with the highest match
-    x, y = max_loc
-
-    # Get the width and height of the template
-    width, height = template.shape[1], template.shape[0]
-
-    # Draw a rectangle around the highest match
-    cv2.rectangle(image_np, (x, y), (x + width, y + height), (0, 255, 0), 2)
-
-    # Display the result
-    cv2.imshow('Result', image_np)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-# Call the function
-
-
 
 
 def SeachAndClickConfirmBtt():
@@ -189,16 +151,16 @@ def Refresh(randomDuration):
         RefreshShop(rand)
         return
     
-    if resultCv == 1:
-        searchAllTemplate('buyBtt.png')
+    if resultCv !=None :
+        searchAllTemplate('buyBtt.png', resultCv)
         time.sleep(rand/1000)
 
         searchTemplate('Buy_button_Covenant.PNG')
         time.sleep(rand/1000)
 
 
-    if resultMystic == 1:
-        searchAllTemplate('buyBtt.png')
+    if resultMystic != None:
+        searchAllTemplate('buyBtt.png',resultMystic)
         time.sleep(rand/1000)
 
         searchTemplate('Buy_button_Mystic.PNG')
@@ -206,9 +168,6 @@ def Refresh(randomDuration):
 
 
     
-    
-    
-
 def SeachAndBuyMystic():
     screenshot = pyautogui.screenshot()
     image_np = np.array(screenshot)
